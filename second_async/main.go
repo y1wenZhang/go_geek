@@ -3,15 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"golang.org/x/sync/errgroup"
 	"io"
 	"net/http"
 	"os"
 	"os/signal"
-	"sync/errgroup"
 )
 
 func helloServer(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w,"hello world")
+	io.WriteString(w, "hello world")
 }
 
 func startServer(server *http.Server) error {
@@ -49,7 +49,7 @@ func main() {
 		}
 		return nil
 	})
-	if err := group.Wait();err != nil{
+	if err := group.Wait(); err != nil {
 		fmt.Println("group error:", err)
 	}
 	fmt.Println("all group done")
